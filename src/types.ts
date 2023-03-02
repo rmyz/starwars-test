@@ -3,8 +3,8 @@ export type TPlanet = {
   name: string;
   diameter: string;
   population: string;
-  climate: Array<string>;
-  terrain: Array<string>;
+  climates: Array<string>;
+  terrains: Array<string>;
   residentsConnection?: Array<{ residents: TResident }>;
 };
 
