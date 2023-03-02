@@ -1,4 +1,4 @@
-export type TPlanet = {
+export type TPlanetRaw = {
   id: string;
   name: string;
   diameter: string;
@@ -6,6 +6,16 @@ export type TPlanet = {
   climates: Array<string>;
   terrains: Array<string>;
   residentConnection?: { residents: Array<TResident> };
+};
+
+export type TPlanet = {
+  id: string;
+  name: string;
+  diameter: string;
+  population: string;
+  climates: string;
+  terrains: string;
+  residents: string | undefined;
 };
 
 export type TResident = {

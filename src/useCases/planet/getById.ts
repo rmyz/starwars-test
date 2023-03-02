@@ -1,9 +1,10 @@
 import { gql } from "graphql-request";
 import { swapiClient } from "../../clients/swapi";
-import { TPlanet } from "../../types";
+import type { TPlanet, TPlanetRaw } from "../../types";
+import { planetFormatter } from "../../utils/planet";
 
 export type TGetByIdResponse = {
-  planet: TPlanet;
+  planet: TPlanetRaw;
 };
 
 export const getById = async ({ id }: Pick<TPlanet, "id">) => {
@@ -32,8 +33,9 @@ export const getById = async ({ id }: Pick<TPlanet, "id">) => {
       query,
       variables,
     });
+    const [planetFormatted] = planetFormatter({ planets: [planet] });
 
-    return planet;
+    return planetFormatted;
   } catch (error) {
     console.error("There has been an error: ", error);
 

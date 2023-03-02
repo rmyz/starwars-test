@@ -11,11 +11,10 @@ import {
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-import type { TPlanet, TResident } from "../../types";
 import { getById } from "../../useCases/planet/getById";
 import DescriptionItem from "../DescriptionItem/DescriptionItem";
-import { formatNumber } from "../../utils/numberFormatter";
 import { FiCircle, FiHome, FiMap, FiSun, FiUsers } from "react-icons/fi";
+import type { TPlanet } from "../../types";
 import type { TStatus } from "../../pages";
 
 const PlanetModal = ({
@@ -32,16 +31,18 @@ const PlanetModal = ({
   handleClickDeleteButton: (id: TPlanet["id"]) => void;
 }) => {
   const { id, diameter, climates, name, population, terrains } = planet;
-  const [residents, setResidents] = useState<Array<TResident>>([]);
+  const [residents, setResidents] = useState<string>();
 
   useEffect(() => {
     async function getResidents() {
-      setResidents([]);
+      setResidents("");
       try {
         const planet = await getById({ id });
-        planet?.residentConnection?.residents &&
-          setResidents(planet.residentConnection.residents);
-      } catch {}
+
+        planet?.residents && setResidents(planet.residents);
+      } catch {
+        console.error("There has been an error getting by id");
+      }
     }
 
     if (isOpen) {
@@ -67,24 +68,14 @@ const PlanetModal = ({
             <div>
               <DescriptionItem
                 title="Diameter"
-                value={
-                  diameter ? `${formatNumber({ value: diameter })} km` : "-"
-                }
+                value={diameter ? `${diameter} km` : "-"}
                 Icon={FiCircle}
               />
-              <DescriptionItem
-                title="Climates"
-                value={climates.join(", ")}
-                Icon={FiSun}
-              />
-              <DescriptionItem
-                title="Terrains"
-                value={terrains.join(", ")}
-                Icon={FiMap}
-              />
+              <DescriptionItem title="Climates" value={climates} Icon={FiSun} />
+              <DescriptionItem title="Terrains" value={terrains} Icon={FiMap} />
               <DescriptionItem
                 title="Population"
-                value={population ? formatNumber({ value: population }) : "-"}
+                value={population ? population : "-"}
                 Icon={FiUsers}
               />
             </div>
@@ -92,11 +83,7 @@ const PlanetModal = ({
           <div className="mt-4">
             <DescriptionItem
               title="Residents"
-              value={
-                residents.length > 0
-                  ? residents.map((resident) => resident.name).join(", ")
-                  : "-"
-              }
+              value={residents ? residents : "-"}
               Icon={FiHome}
             />
           </div>

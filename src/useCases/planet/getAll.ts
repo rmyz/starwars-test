@@ -1,11 +1,12 @@
 import { gql } from "graphql-request";
 import { swapiClient } from "../../clients/swapi";
-import { TPlanet } from "../../types";
+import type { TPlanetRaw } from "../../types";
+import { planetFormatter } from "../../utils/planet";
 
 type TGetAllResponse = {
   allPlanets: {
     totalCount: number;
-    planets: Array<TPlanet>;
+    planets: Array<TPlanetRaw>;
   };
 };
 
@@ -28,8 +29,9 @@ export const getAll = async () => {
 
   try {
     const { allPlanets } = await swapiClient<TGetAllResponse>({ query });
+    const planetsFormatted = planetFormatter({ planets: allPlanets.planets });
 
-    return allPlanets;
+    return { totalCount: allPlanets.totalCount, planets: planetsFormatted };
   } catch (error) {
     console.error("There has been an error: ", error);
 

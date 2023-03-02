@@ -8,7 +8,6 @@ import {
   FiUsers,
   FiMap,
 } from "react-icons/fi";
-import { formatNumber } from "../../utils/numberFormatter";
 import DescriptionItem from "../DescriptionItem/DescriptionItem";
 
 const PlanetCard = ({
@@ -53,22 +52,14 @@ const PlanetCard = ({
         <p className="text-xl font-semibold text-center">{name}</p>
         <DescriptionItem
           title="Diameter"
-          value={diameter ? `${formatNumber({ value: diameter })} km` : "-"}
+          value={diameter ? `${diameter} km` : "-"}
           Icon={FiCircle}
         />
-        <DescriptionItem
-          title="Climates"
-          value={climates.join(", ")}
-          Icon={FiSun}
-        />
-        <DescriptionItem
-          title="Terrains"
-          value={terrains.join(", ")}
-          Icon={FiMap}
-        />
+        <DescriptionItem title="Climates" value={climates} Icon={FiSun} />
+        <DescriptionItem title="Terrains" value={terrains} Icon={FiMap} />
         <DescriptionItem
           title="Population"
-          value={population ? formatNumber({ value: population }) : "-"}
+          value={population ? population : "-"}
           Icon={FiUsers}
         />
       </div>
