@@ -1,6 +1,6 @@
 # Star wars Test
 
-This is my approach to a Planet-based website using [SWAPI](https://swapi.dev/).
+This is my approach to a Planet-based website using [SWAPI](https://studio.apollographql.com/public/star-wars-swapi/home?variant=current).
 
 **I highly recommend to read [DEV_DECISIONS.md](DEV_DECISIONS.md) in order to know the reasons and choices made for this app.**
 
