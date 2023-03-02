@@ -7,6 +7,7 @@ import { getAll } from "../useCases/planet/getAll";
 import type { TPlanet } from "../types";
 import { planetFilter, planetFinder } from "../utils/planet";
 import AlertDialogPrimitive from "../components/AlertDialog/AlertDialog";
+import MainLayout from "../layouts/MainLayout/MainLayout";
 
 export type TProps = Awaited<ReturnType<typeof getServerSideProps>>["props"];
 
@@ -69,8 +70,7 @@ export default function Home({
   };
 
   return (
-    <div className="lg:p-16 lg:px-32">
-      <h1 className="text-center text-black text-7xl font-starjedi">Planets</h1>
+    <MainLayout title="Planets">
       <div className="flex flex-column">
         <div className="flex flex-wrap justify-center gap-20 mt-12">
           {planets.map((planet) => (
@@ -97,7 +97,7 @@ export default function Home({
           onConfirmDelete={handleConfirmDelete}
         />
       </div>
-    </div>
+    </MainLayout>
   );
 }
 

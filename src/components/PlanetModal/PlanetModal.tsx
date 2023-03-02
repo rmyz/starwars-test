@@ -16,7 +16,7 @@ import { getById } from "../../useCases/planet/getById";
 import DescriptionItem from "../DescriptionItem/DescriptionItem";
 import { formatNumber } from "../../utils/numberFormatter";
 import { FiCircle, FiHome, FiMap, FiSun, FiUsers } from "react-icons/fi";
-import { TStatus } from "../../pages";
+import type { TStatus } from "../../pages";
 
 const PlanetModal = ({
   isOpen,
@@ -56,7 +56,7 @@ const PlanetModal = ({
         <ModalHeader>{name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <div className="flex gap-4">
+          <div className="flex flex-col items-center gap-4 lg:flex-row lg:items-start">
             <Image
               src="/images/planet-1.png"
               alt={name}
