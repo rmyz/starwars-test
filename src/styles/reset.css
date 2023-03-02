@@ -194,4 +194,13 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.5;
+  background-image: url("/images/bg.jpg");
+  background-position: center;
+  background-size: contain;
+  color: white;
+}
+
+.font-starjedi {
+  -webkit-text-stroke: #FCDB22;
+  -webkit-text-stroke-width: 4px;
 }
