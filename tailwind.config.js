@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./src/**/*.tsx"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        starjedi: ["var(--font-starjedi)", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };
