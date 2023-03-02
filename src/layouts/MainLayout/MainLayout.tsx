@@ -3,6 +3,7 @@ import Image from "next/image";
 import Title from "../../components/Title/Title";
 import Link from "next/link";
 import NavItem from "../../components/NavItem/NavItem";
+import Head from "next/head";
 
 const MainLayout = ({
   children,
@@ -13,6 +14,9 @@ const MainLayout = ({
 }) => {
   return (
     <>
+      <Head>
+        <title>Star Wars Planets</title>
+      </Head>
       <nav className="flex items-center justify-between px-4 py-2 bg-neutral-800">
         <Link href="/">
           <Image
