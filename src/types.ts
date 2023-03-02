@@ -5,7 +5,7 @@ export type TPlanet = {
   population: string;
   climates: Array<string>;
   terrains: Array<string>;
-  residentsConnection?: Array<{ residents: TResident }>;
+  residentConnection?: { residents: Array<TResident> };
 };
 
 export type TResident = {
