@@ -4,7 +4,11 @@ import { ColorModeScript } from "@chakra-ui/react";
 export default function Document() {
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        <link rel="icon" href="/images/favicon.ico" />
+        {/* eslint-disable-next-line @next/next/no-title-in-document-head */}
+        <title>Star Wars Planets</title>
+      </Head>
       <body>
         <ColorModeScript initialColorMode={"dark"} />
         <Main />
