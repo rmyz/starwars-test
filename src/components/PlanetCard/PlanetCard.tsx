@@ -15,10 +15,12 @@ const PlanetCard = ({
   planet,
   onEdit,
   onDelete,
+  onClick,
 }: {
   planet: TPlanet;
   onEdit: (id: TPlanet["id"]) => void;
   onDelete: (id: TPlanet["id"]) => void;
+  onClick: (id: TPlanet["id"]) => void;
 }) => {
   const { id, diameter, climates, name, population, terrains } = planet;
 
@@ -47,15 +49,13 @@ const PlanetCard = ({
         width="250"
         className="rounded-xl aspect-square"
       />
-      <div className="flex flex-col gap-2 mt-4">
+      <div onClick={() => onClick(id)} className="flex flex-col gap-2 mt-4">
         <p className="text-xl font-semibold text-center">{name}</p>
-
         <DescriptionItem
           title="Diameter"
           value={diameter ? `${formatNumber({ value: diameter })} km` : "-"}
           Icon={FiCircle}
         />
-
         <DescriptionItem
           title="Climates"
           value={climates.join(", ")}
@@ -66,7 +66,6 @@ const PlanetCard = ({
           value={terrains.join(", ")}
           Icon={FiMap}
         />
-
         <DescriptionItem
           title="Population"
           value={population ? formatNumber({ value: population }) : "-"}

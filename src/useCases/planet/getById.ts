@@ -2,7 +2,7 @@ import { gql } from "graphql-request";
 import { swapiClient } from "../../clients/swapi";
 import { TPlanet } from "../../types";
 
-type TGetByIdResponse = {
+export type TGetByIdResponse = {
   planet: TPlanet;
 };
 
@@ -37,6 +37,6 @@ export const getById = async ({ id }: Pick<TPlanet, "id">) => {
   } catch (error) {
     console.error("There has been an error: ", error);
 
-    return { planet: null };
+    return null;
   }
 };
