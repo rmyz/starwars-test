@@ -194,10 +194,12 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.5;
-  background-image: url("/images/bg.jpg");
-  background-position: center;
-  background-size: contain;
-  color: white;
+  
+  /* !important required to overwrite ChakraUI css */
+  background-image: url("/images/bg.jpg") !important;
+  background-position: center !important;
+  background-size: contain !important;
+  color: white !important;
 }
 
 .font-starjedi {
