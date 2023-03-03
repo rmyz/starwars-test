@@ -9,21 +9,26 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useRef } from "react";
+import { useStore } from "../../store/store";
 
-const AlertDialogPrimitive = ({ isOpen, onClose, planet, onConfirmDelete }) => {
+const AlertDialogPrimitive = ({ onConfirmDelete }) => {
+  const { planetSelected, isOpenDeleteAlert, setIsOpenDeleteAlert } =
+    useStore();
+
   const cancelRef = useRef();
-  const { name } = planet;
+
+  const { name } = planetSelected;
 
   const handleDelete = () => {
     onConfirmDelete();
-    onClose();
+    setIsOpenDeleteAlert(false);
   };
 
   return (
     <AlertDialog
-      isOpen={isOpen}
+      isOpen={isOpenDeleteAlert}
       leastDestructiveRef={cancelRef}
-      onClose={onClose}
+      onClose={() => setIsOpenDeleteAlert(false)}
     >
       <AlertDialogOverlay>
         <AlertDialogContent>
@@ -37,7 +42,7 @@ const AlertDialogPrimitive = ({ isOpen, onClose, planet, onConfirmDelete }) => {
           </AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
+            <Button ref={cancelRef} onClick={() => setIsOpenDeleteAlert(false)}>
               Cancel
             </Button>
             <Button colorScheme="red" onClick={handleDelete} ml={3}>

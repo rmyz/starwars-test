@@ -8,31 +8,24 @@ import {
   ModalCloseButton,
   Button,
 } from "@chakra-ui/react";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 
 import { getById } from "../../useCases/planet/getById";
 import DescriptionItem from "../DescriptionItem/DescriptionItem";
 import { FiCircle, FiHome, FiMap, FiSun, FiUsers } from "react-icons/fi";
 import type { TPlanet } from "../../types";
-import { STATUS, TStatus } from "../../pages";
+import { STATUS } from "../../pages";
 import EditForm, { TEditFormValues } from "../EditForm/EditForm";
 import CreateForm from "../NewForm/NewForm";
+import { useStore } from "../../store/store";
+import { planetReplacer } from "../../utils/planet";
 
 const PlanetModal = ({
-  isOpen,
-  onClose,
-  planet,
-  status,
   handleClickDeleteButton,
   handleOnSubmitEditForm,
   handleOnSubmitCreateForm,
-  setStatus,
 }: {
-  isOpen: boolean;
-  onClose: () => void;
-  planet: TPlanet;
-  status: TStatus;
   handleClickDeleteButton: (id: TPlanet["id"]) => void;
   handleOnSubmitEditForm: ({
     values,
@@ -42,42 +35,59 @@ const PlanetModal = ({
     id: TPlanet["id"];
   }) => void;
   handleOnSubmitCreateForm: ({ values }: { values: TPlanet }) => void;
-  setStatus: Dispatch<SetStateAction<TStatus>>;
 }) => {
   const {
-    id,
-    diameter,
-    climates,
-    name,
-    population,
-    terrains,
-    residents: savedResidents,
-  } = planet;
-  const [residents, setResidents] = useState<string>(savedResidents);
+    planets,
+    setPlanets,
+    planetSelected,
+    setPlanetSelected,
+    status,
+    setStatus,
+    isOpenPlanetModal,
+    setIsOpenPlanetModal,
+  } = useStore();
+
+  const { id, diameter, climates, name, population, terrains, residents } =
+    planetSelected;
 
   useEffect(() => {
     async function getResidents() {
-      setResidents("");
       try {
         const fullPlanet = await getById({ id });
 
-        fullPlanet?.residents && setResidents(fullPlanet.residents);
+        if (fullPlanet && fullPlanet.residents) {
+          const newPlanets = planetReplacer({
+            id,
+            values: {
+              residents: fullPlanet.residents,
+              diameter,
+              climates,
+              population,
+              terrains,
+            },
+            planets,
+          });
+
+          setPlanets(newPlanets);
+          setPlanetSelected(fullPlanet);
+        }
       } catch {
         console.error("There has been an error getting by id");
       }
     }
 
-    if (isOpen && id && !savedResidents) {
+    if (isOpenPlanetModal && id && !residents) {
       getResidents();
     }
+  }, [isOpenPlanetModal]);
 
-    if (savedResidents) {
-      setResidents(savedResidents);
-    }
-  }, [isOpen]);
+  const handleClose = () => {
+    setStatus(STATUS.idle);
+    setIsOpenPlanetModal(false);
+  };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="xl">
+    <Modal isOpen={isOpenPlanetModal} onClose={handleClose} size="xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
@@ -127,17 +137,14 @@ const PlanetModal = ({
               <EditForm
                 onSubmit={handleOnSubmitEditForm}
                 onCancel={() => setStatus(STATUS.idle)}
-                planet={{ ...planet, residents }}
+                planet={planetSelected}
               />
             ) : null}
 
             {status === STATUS.isCreating ? (
               <CreateForm
                 onSubmit={handleOnSubmitCreateForm}
-                onCancel={() => {
-                  setStatus(STATUS.idle);
-                  onClose();
-                }}
+                onCancel={handleClose}
               />
             ) : null}
           </div>
@@ -159,7 +166,7 @@ const PlanetModal = ({
             >
               Edit
             </Button>
-            <Button onClick={onClose}>Close</Button>
+            <Button onClick={handleClose}>Close</Button>
           </ModalFooter>
         ) : null}
       </ModalContent>

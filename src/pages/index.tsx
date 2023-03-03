@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { Button, useDisclosure } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { Button } from "@chakra-ui/react";
 import PlanetCard from "../components/PlanetCard/PlanetCard";
 import PlanetModal from "../components/PlanetModal/PlanetModal";
-import useLocalStorageStore from "../hooks/useLocalStorageStore";
 import { getAll } from "../useCases/planet/getAll";
 import type { TPlanet } from "../types";
 import {
@@ -14,6 +13,7 @@ import {
 import AlertDialogPrimitive from "../components/AlertDialog/AlertDialog";
 import MainLayout from "../layouts/MainLayout/MainLayout";
 import type { TEditFormValues } from "../components/EditForm/EditForm";
+import { useStore } from "../store/store";
 
 export type TProps = Awaited<ReturnType<typeof getServerSideProps>>["props"];
 
@@ -25,37 +25,36 @@ export const STATUS = {
 
 export type TStatus = typeof STATUS[keyof typeof STATUS];
 
-export default function Home({
-  planets: initialPlanets,
-  totalCount: initialTotalCount,
-}: TProps) {
-  const [{ planets, totalCount }, setState] = useLocalStorageStore({
-    planets: initialPlanets,
-    totalCount: initialTotalCount,
-  });
-  const { isOpen, onOpen, onClose } = useDisclosure();
+export default function Home({ planets: initialPlanets }: TProps) {
   const {
-    isOpen: isOpenAlert,
-    onOpen: onOpenAlert,
-    onClose: onCloseAlert,
-  } = useDisclosure();
+    setPlanets,
+    planets,
+    planetSelected,
+    setPlanetSelected,
+    setStatus,
+    setIsOpenPlanetModal,
+    setIsOpenDeleteAlert,
+  } = useStore();
 
-  const [planetSelected, setPlanetSelected] = useState<TPlanet>(planets[0]);
-  const [status, setStatus] = useState<TStatus>(STATUS.idle);
+  useEffect(() => {
+    if (planets.length === 0) {
+      setPlanets(initialPlanets);
+    }
+  }, []);
 
   const handleOpen = (id: TPlanet["id"], callback?: () => void) => {
     const planetToOpen = planetFinder({ id, planets });
 
     if (planetToOpen) {
       setPlanetSelected(planetToOpen);
-      onOpen();
+      setIsOpenPlanetModal(true);
       callback && callback();
     }
   };
 
   const handleClickCreate = () => {
     setStatus(STATUS.isCreating);
-    onOpen();
+    setIsOpenPlanetModal(true);
   };
 
   const handleClickEditButton = (id: TPlanet["id"]) => {
@@ -67,18 +66,13 @@ export default function Home({
 
     if (planetToOpen) {
       setPlanetSelected(planetToOpen);
-      onOpenAlert();
+      setIsOpenDeleteAlert(true);
     }
   };
 
   const handleConfirmDelete = () => {
     const newPlanets = planetFilter({ id: planetSelected.id, planets });
-    setState({ totalCount: newPlanets.length, planets: newPlanets });
-  };
-
-  const handleCloseModal = () => {
-    setStatus(STATUS.idle);
-    onClose();
+    setPlanets(newPlanets);
   };
 
   const handleOnSubmitEditForm = ({
@@ -90,16 +84,16 @@ export default function Home({
   }) => {
     const newPlanets = planetReplacer({ id, values, planets });
 
-    setState({ totalCount: newPlanets.length, planets: newPlanets });
-    onClose();
+    setPlanets(newPlanets);
+    setIsOpenPlanetModal(false);
     setStatus(STATUS.idle);
   };
 
   const handleOnSubmitCreateForm = ({ values }: { values: TPlanet }) => {
     const newPlanets = planetCreator({ newPlanet: values, planets });
 
-    setState({ totalCount: newPlanets.length, planets: newPlanets });
-    onClose();
+    setPlanets(newPlanets);
+    setIsOpenPlanetModal(false);
     setStatus(STATUS.idle);
   };
 
@@ -123,33 +117,22 @@ export default function Home({
           ))}
         </div>
         <PlanetModal
-          isOpen={isOpen}
-          onClose={handleCloseModal}
-          planet={planetSelected}
-          status={status}
-          setStatus={setStatus}
           handleClickDeleteButton={handleClickDeleteButton}
           handleOnSubmitEditForm={handleOnSubmitEditForm}
           handleOnSubmitCreateForm={handleOnSubmitCreateForm}
         />
-        <AlertDialogPrimitive
-          planet={planetSelected}
-          isOpen={isOpenAlert}
-          onClose={onCloseAlert}
-          onConfirmDelete={handleConfirmDelete}
-        />
+        <AlertDialogPrimitive onConfirmDelete={handleConfirmDelete} />
       </div>
     </MainLayout>
   );
 }
 
 export async function getServerSideProps() {
-  const { planets, totalCount } = await getAll();
+  const { planets } = await getAll();
 
   return {
     props: {
       planets,
-      totalCount,
     },
   };
 }
