@@ -1,19 +1,26 @@
 import { useState } from "react";
-import { useDisclosure } from "@chakra-ui/react";
+import { Button, useDisclosure } from "@chakra-ui/react";
 import PlanetCard from "../components/PlanetCard/PlanetCard";
 import PlanetModal from "../components/PlanetModal/PlanetModal";
 import useLocalStorageStore from "../hooks/useLocalStorageStore";
 import { getAll } from "../useCases/planet/getAll";
 import type { TPlanet } from "../types";
-import { planetFilter, planetFinder } from "../utils/planet";
+import {
+  planetCreator,
+  planetFilter,
+  planetFinder,
+  planetReplacer,
+} from "../utils/planet";
 import AlertDialogPrimitive from "../components/AlertDialog/AlertDialog";
 import MainLayout from "../layouts/MainLayout/MainLayout";
+import type { TEditFormValues } from "../components/EditForm/EditForm";
 
 export type TProps = Awaited<ReturnType<typeof getServerSideProps>>["props"];
 
-const STATUS = {
-  isEditing: "isEditing",
+export const STATUS = {
   idle: "idle",
+  isEditing: "isEditing",
+  isCreating: "isCreating",
 } as const;
 
 export type TStatus = typeof STATUS[keyof typeof STATUS];
@@ -46,7 +53,12 @@ export default function Home({
     }
   };
 
-  const handleEdit = (id: TPlanet["id"]) => {
+  const handleClickCreate = () => {
+    setStatus(STATUS.isCreating);
+    onOpen();
+  };
+
+  const handleClickEditButton = (id: TPlanet["id"]) => {
     handleOpen(id, () => setStatus(STATUS.isEditing));
   };
 
@@ -69,8 +81,35 @@ export default function Home({
     onClose();
   };
 
+  const handleOnSubmitEditForm = ({
+    values,
+    id,
+  }: {
+    values: TEditFormValues;
+    id: TPlanet["id"];
+  }) => {
+    const newPlanets = planetReplacer({ id, values, planets });
+
+    setState({ totalCount: newPlanets.length, planets: newPlanets });
+    onClose();
+    setStatus(STATUS.idle);
+  };
+
+  const handleOnSubmitCreateForm = ({ values }: { values: TPlanet }) => {
+    const newPlanets = planetCreator({ newPlanet: values, planets });
+
+    setState({ totalCount: newPlanets.length, planets: newPlanets });
+    onClose();
+    setStatus(STATUS.idle);
+  };
+
   return (
     <MainLayout title="Planets">
+      <div className="flex justify-end">
+        <Button onClick={handleClickCreate} colorScheme="purple">
+          Add new Planet
+        </Button>
+      </div>
       <div className="flex flex-column">
         <div className="flex flex-wrap justify-center gap-20 mt-12">
           {planets.map((planet) => (
@@ -78,7 +117,7 @@ export default function Home({
               onClick={handleOpen}
               key={planet.id}
               planet={planet}
-              onEdit={handleEdit}
+              onEdit={handleClickEditButton}
               onDelete={handleClickDeleteButton}
             />
           ))}
@@ -88,7 +127,10 @@ export default function Home({
           onClose={handleCloseModal}
           planet={planetSelected}
           status={status}
+          setStatus={setStatus}
           handleClickDeleteButton={handleClickDeleteButton}
+          handleOnSubmitEditForm={handleOnSubmitEditForm}
+          handleOnSubmitCreateForm={handleOnSubmitCreateForm}
         />
         <AlertDialogPrimitive
           planet={planetSelected}

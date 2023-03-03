@@ -15,7 +15,7 @@ export type TPlanet = {
   population: string;
   climates: string;
   terrains: string;
-  residents: string | undefined;
+  residents: string;
 };
 
 export type TResident = {

@@ -1,3 +1,4 @@
+import type { TEditFormValues } from "../components/EditForm/EditForm";
 import type { TProps } from "../pages";
 import type { TPlanet, TPlanetRaw } from "../types";
 import { formatNumber } from "./numberFormatter";
@@ -20,6 +21,36 @@ export const planetFilter = ({
   planets: TProps["planets"];
 }) => {
   return planets.filter((planet) => planet.id !== id);
+};
+
+export const planetReplacer = ({
+  id,
+  values,
+  planets,
+}: {
+  id: TPlanet["id"];
+  values: TEditFormValues;
+  planets: TProps["planets"];
+}) => {
+  return planets.map((planet) => {
+    if (planet.id === id) {
+      return {
+        ...planet,
+        ...values,
+      };
+    }
+    return planet;
+  });
+};
+
+export const planetCreator = ({
+  newPlanet,
+  planets,
+}: {
+  newPlanet: TPlanet;
+  planets: TProps["planets"];
+}) => {
+  return [newPlanet, ...planets];
 };
 
 export const planetFormatter = ({
