@@ -18,7 +18,7 @@ import type { TPlanet } from "../../types";
 import { STATUS } from "../../pages";
 import EditForm, { TEditFormValues } from "../EditForm/EditForm";
 import CreateForm from "../NewForm/NewForm";
-import { useStore } from "../../store/store";
+import useAppStore from "../../hooks/useAppStore";
 import { planetReplacer } from "../../utils/planet";
 
 const PlanetModal = ({
@@ -45,7 +45,7 @@ const PlanetModal = ({
     setStatus,
     isOpenPlanetModal,
     setIsOpenPlanetModal,
-  } = useStore();
+  } = useAppStore();
 
   const { id, diameter, climates, name, population, terrains, residents } =
     planetSelected;

@@ -9,11 +9,11 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import { useStore } from "../../store/store";
+import useAppStore from "../../hooks/useAppStore";
 
 const AlertDialogPrimitive = ({ onConfirmDelete }) => {
   const { planetSelected, isOpenDeleteAlert, setIsOpenDeleteAlert } =
-    useStore();
+    useAppStore();
 
   const cancelRef = useRef();
 

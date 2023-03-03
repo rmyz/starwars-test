@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Button } from "@chakra-ui/react";
 import PlanetCard from "../components/PlanetCard/PlanetCard";
 import PlanetModal from "../components/PlanetModal/PlanetModal";
@@ -13,7 +12,7 @@ import {
 import AlertDialogPrimitive from "../components/AlertDialog/AlertDialog";
 import MainLayout from "../layouts/MainLayout/MainLayout";
 import type { TEditFormValues } from "../components/EditForm/EditForm";
-import { useStore } from "../store/store";
+import useAppStore from "../hooks/useAppStore";
 
 export type TProps = Awaited<ReturnType<typeof getServerSideProps>>["props"];
 
@@ -34,13 +33,7 @@ export default function Home({ planets: initialPlanets }: TProps) {
     setStatus,
     setIsOpenPlanetModal,
     setIsOpenDeleteAlert,
-  } = useStore();
-
-  useEffect(() => {
-    if (planets.length === 0) {
-      setPlanets(initialPlanets);
-    }
-  }, []);
+  } = useAppStore();
 
   const handleOpen = (id: TPlanet["id"], callback?: () => void) => {
     const planetToOpen = planetFinder({ id, planets });

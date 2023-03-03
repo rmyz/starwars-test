@@ -1,45 +1,49 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createStore } from "zustand";
 import type { TStatus } from "../pages";
 import type { TPlanet } from "../types";
 
-export type TStore = {
+export type TStoreProps = {
   planets: Array<TPlanet>;
-  setPlanets: (planets: Array<TPlanet>) => void;
   planetSelected: TPlanet;
-  setPlanetSelected: (planet: TPlanet) => void;
   status: TStatus;
-  setStatus: (status: TStatus) => void;
   isOpenPlanetModal: boolean;
-  setIsOpenPlanetModal: (value: boolean) => void;
   isOpenDeleteAlert: boolean;
+};
+
+export type TStore = TStoreProps & {
+  setPlanets: (planets: Array<TPlanet>) => void;
+  setPlanetSelected: (planet: TPlanet) => void;
+  setStatus: (status: TStatus) => void;
+  setIsOpenPlanetModal: (value: boolean) => void;
   setIsOpenDeleteAlert: (value: boolean) => void;
 };
 
-export const useStore = create<TStore>()(
-  persist(
-    (set) => ({
-      planets: [],
-      setPlanets: (planets) => set({ planets }),
-      planetSelected: {
-        id: "",
-        name: "",
-        residents: "",
-        climates: "",
-        terrains: "",
-        population: "",
-        diameter: "",
-      },
-      setPlanetSelected: (planet) => set({ planetSelected: planet }),
-      status: "idle",
-      setStatus: (status) => set({ status }),
-      isOpenPlanetModal: false,
-      setIsOpenPlanetModal: (isOpenPlanetModal) => set({ isOpenPlanetModal }),
-      isOpenDeleteAlert: false,
-      setIsOpenDeleteAlert: (isOpenDeleteAlert) => set({ isOpenDeleteAlert }),
-    }),
-    {
-      name: "app-storage",
-    }
-  )
-);
+export type TAppStore = ReturnType<typeof createAppStore>;
+
+export const createAppStore = (initProps?: Partial<TStoreProps>) => {
+  const DEFAULT_PROPS: TStoreProps = {
+    planets: [],
+    planetSelected: {
+      id: "",
+      name: "",
+      residents: "",
+      climates: "",
+      terrains: "",
+      population: "",
+      diameter: "",
+    },
+    status: "idle",
+    isOpenPlanetModal: false,
+    isOpenDeleteAlert: false,
+  };
+
+  return createStore<TStore>((set) => ({
+    ...DEFAULT_PROPS,
+    ...initProps,
+    setPlanets: (planets) => set({ planets }),
+    setPlanetSelected: (planet) => set({ planetSelected: planet }),
+    setStatus: (status) => set({ status }),
+    setIsOpenPlanetModal: (isOpenPlanetModal) => set({ isOpenPlanetModal }),
+    setIsOpenDeleteAlert: (isOpenDeleteAlert) => set({ isOpenDeleteAlert }),
+  }));
+};

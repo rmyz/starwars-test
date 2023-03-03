@@ -2,6 +2,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import localFont from "next/font/local";
+import { AppProvider } from "../store/context";
 
 import "../styles/reset.css";
 
@@ -21,7 +22,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider resetCSS={false} theme={theme}>
       <main className={`${starJediFont.variable} font-sans`}>
-        <Component {...pageProps} />;
+        <AppProvider {...pageProps}>
+          <Component {...pageProps} />;
+        </AppProvider>
       </main>
     </ChakraProvider>
   );
