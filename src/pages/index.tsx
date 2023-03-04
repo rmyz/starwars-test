@@ -3,16 +3,14 @@ import PlanetCard from "../components/PlanetCard/PlanetCard";
 import PlanetModal from "../components/PlanetModal/PlanetModal";
 import { getAll } from "../useCases/planet/getAll";
 import type { TPlanet } from "../types";
-import {
-  planetCreator,
-  planetFilter,
-  planetFinder,
-  planetReplacer,
-} from "../utils/planet";
+import { planetFinder } from "../utils/planet";
 import AlertDialogPrimitive from "../components/AlertDialog/AlertDialog";
 import MainLayout from "../layouts/MainLayout/MainLayout";
 import type { TEditFormValues } from "../components/EditForm/EditForm";
 import useAppStore from "../hooks/useAppStore";
+import { remove } from "../useCases/planet/remove";
+import { edit } from "../useCases/planet/edit";
+import { add } from "../useCases/planet/add";
 
 export type TProps = Awaited<ReturnType<typeof getServerSideProps>>["props"];
 
@@ -24,7 +22,7 @@ export const STATUS = {
 
 export type TStatus = typeof STATUS[keyof typeof STATUS];
 
-export default function Home({ planets: initialPlanets }: TProps) {
+export default function Home() {
   const {
     setPlanets,
     planets,
@@ -64,7 +62,8 @@ export default function Home({ planets: initialPlanets }: TProps) {
   };
 
   const handleConfirmDelete = () => {
-    const newPlanets = planetFilter({ id: planetSelected.id, planets });
+    const newPlanets = remove({ id: planetSelected.id, planets });
+
     setPlanets(newPlanets);
   };
 
@@ -75,7 +74,7 @@ export default function Home({ planets: initialPlanets }: TProps) {
     values: TEditFormValues;
     id: TPlanet["id"];
   }) => {
-    const newPlanets = planetReplacer({ id, values, planets });
+    const newPlanets = edit({ id, values, planets });
 
     setPlanets(newPlanets);
     setIsOpenPlanetModal(false);
@@ -83,7 +82,7 @@ export default function Home({ planets: initialPlanets }: TProps) {
   };
 
   const handleOnSubmitCreateForm = ({ values }: { values: TPlanet }) => {
-    const newPlanets = planetCreator({ newPlanet: values, planets });
+    const newPlanets = add({ newPlanet: values, planets });
 
     setPlanets(newPlanets);
     setIsOpenPlanetModal(false);

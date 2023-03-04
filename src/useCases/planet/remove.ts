@@ -1,4 +1,3 @@
-import type { TProps } from "../../pages";
 import type { TPlanet } from "../../types";
 import { planetFilter } from "../../utils/planet";
 
@@ -7,7 +6,7 @@ export const remove = ({
   planets,
 }: {
   id: TPlanet["id"];
-  planets: TProps["planets"];
+  planets: Array<TPlanet>;
 }) => {
   return planetFilter({ id, planets });
 };
