@@ -3,7 +3,6 @@ import PlanetCard from "../components/PlanetCard/PlanetCard";
 import PlanetModal from "../components/PlanetModal/PlanetModal";
 import { getAll } from "../useCases/planet/getAll";
 import type { TPlanet } from "../types";
-import { planetFinder } from "../utils/planet";
 import AlertDialogPrimitive from "../components/AlertDialog/AlertDialog";
 import MainLayout from "../layouts/MainLayout/MainLayout";
 import type { TEditFormValues } from "../components/EditForm/EditForm";
@@ -11,6 +10,7 @@ import useAppStore from "../hooks/useAppStore";
 import { remove } from "../useCases/planet/remove";
 import { edit } from "../useCases/planet/edit";
 import { add } from "../useCases/planet/add";
+import { search } from "../useCases/planet/search";
 
 export type TProps = Awaited<ReturnType<typeof getServerSideProps>>["props"];
 
@@ -34,7 +34,7 @@ export default function Home() {
   } = useAppStore();
 
   const handleOpen = (id: TPlanet["id"], callback?: () => void) => {
-    const planetToOpen = planetFinder({ id, planets });
+    const planetToOpen = search({ id, planets });
 
     if (planetToOpen) {
       setPlanetSelected(planetToOpen);
@@ -53,7 +53,7 @@ export default function Home() {
   };
 
   const handleClickDeleteButton = (id: TPlanet["id"]) => {
-    const planetToOpen = planetFinder({ id, planets });
+    const planetToOpen = search({ id, planets });
 
     if (planetToOpen) {
       setPlanetSelected(planetToOpen);
