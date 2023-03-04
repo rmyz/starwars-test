@@ -13,6 +13,7 @@ import { add } from "../useCases/planet/add";
 import { search } from "../useCases/planet/search";
 import { useMemo } from "react";
 import Pagination from "../components/Pagination/Pagination";
+import Sorter from "../components/Sorter/Sorter";
 
 export type TProps = Awaited<ReturnType<typeof getServerSideProps>>["props"];
 
@@ -106,7 +107,8 @@ export default function Home() {
   return (
     <>
       <MainLayout title="Planets">
-        <div className="flex justify-end">
+        <div className="flex items-end justify-end gap-4">
+          <Sorter />
           <Button onClick={handleClickCreate} colorScheme="purple">
             Add new Planet
           </Button>

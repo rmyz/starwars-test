@@ -1,6 +1,8 @@
 import { createStore } from "zustand";
+import { SORT_TYPES, TSort } from "../components/Sorter/config";
 import type { TStatus } from "../pages";
 import type { TPlanet } from "../types";
+import { sort } from "../useCases/planet/sort";
 
 export type TStoreProps = {
   planets: Array<TPlanet>;
@@ -9,6 +11,7 @@ export type TStoreProps = {
   isOpenPlanetModal: boolean;
   isOpenDeleteAlert: boolean;
   currentPage: number;
+  sorter: TSort;
 };
 
 export type TStore = TStoreProps & {
@@ -18,6 +21,7 @@ export type TStore = TStoreProps & {
   setIsOpenPlanetModal: (value: boolean) => void;
   setIsOpenDeleteAlert: (value: boolean) => void;
   setCurrentPage: (value: number) => void;
+  setSorter: (sort: TSort) => void;
 };
 
 export type TAppStore = ReturnType<typeof createAppStore>;
@@ -38,9 +42,10 @@ export const createAppStore = (initProps?: Partial<TStoreProps>) => {
     isOpenPlanetModal: false,
     isOpenDeleteAlert: false,
     currentPage: 0,
+    sorter: SORT_TYPES.Name,
   };
 
-  return createStore<TStore>((set) => ({
+  return createStore<TStore>((set, get) => ({
     ...DEFAULT_PROPS,
     ...initProps,
     setPlanets: (planets) => set({ planets }),
@@ -49,5 +54,6 @@ export const createAppStore = (initProps?: Partial<TStoreProps>) => {
     setIsOpenPlanetModal: (isOpenPlanetModal) => set({ isOpenPlanetModal }),
     setIsOpenDeleteAlert: (isOpenDeleteAlert) => set({ isOpenDeleteAlert }),
     setCurrentPage: (currentPage) => set({ currentPage }),
+    setSorter: (sorter) => set({ sorter }),
   }));
 };
