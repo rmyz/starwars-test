@@ -8,6 +8,7 @@ export type TStoreProps = {
   status: TStatus;
   isOpenPlanetModal: boolean;
   isOpenDeleteAlert: boolean;
+  currentPage: number;
 };
 
 export type TStore = TStoreProps & {
@@ -16,6 +17,7 @@ export type TStore = TStoreProps & {
   setStatus: (status: TStatus) => void;
   setIsOpenPlanetModal: (value: boolean) => void;
   setIsOpenDeleteAlert: (value: boolean) => void;
+  setCurrentPage: (value: number) => void;
 };
 
 export type TAppStore = ReturnType<typeof createAppStore>;
@@ -35,6 +37,7 @@ export const createAppStore = (initProps?: Partial<TStoreProps>) => {
     status: "idle",
     isOpenPlanetModal: false,
     isOpenDeleteAlert: false,
+    currentPage: 0,
   };
 
   return createStore<TStore>((set) => ({
@@ -45,5 +48,6 @@ export const createAppStore = (initProps?: Partial<TStoreProps>) => {
     setStatus: (status) => set({ status }),
     setIsOpenPlanetModal: (isOpenPlanetModal) => set({ isOpenPlanetModal }),
     setIsOpenDeleteAlert: (isOpenDeleteAlert) => set({ isOpenDeleteAlert }),
+    setCurrentPage: (currentPage) => set({ currentPage }),
   }));
 };
