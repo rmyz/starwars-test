@@ -16,6 +16,7 @@ import Pagination from "../components/Pagination/Pagination";
 import Sorter from "../components/Sorter/Sorter";
 import Search from "../components/Search/Search";
 import { SEARCH_TYPES } from "../components/Search/config";
+import Image from "next/image";
 
 export type TProps = Awaited<ReturnType<typeof getServerSideProps>>["props"];
 
@@ -126,15 +127,27 @@ export default function Home() {
         </div>
         <div className="flex flex-col">
           <div className="flex flex-wrap justify-center gap-20 mt-12">
-            {paginatedPlanets.map((planet) => (
-              <PlanetCard
-                onClick={handleOpen}
-                key={planet.id}
-                planet={planet}
-                onEdit={handleClickEditButton}
-                onDelete={handleClickDeleteButton}
-              />
-            ))}
+            {paginatedPlanets.length > 0 ? (
+              paginatedPlanets.map((planet) => (
+                <PlanetCard
+                  onClick={handleOpen}
+                  key={planet.id}
+                  planet={planet}
+                  onEdit={handleClickEditButton}
+                  onDelete={handleClickDeleteButton}
+                />
+              ))
+            ) : (
+              <div className="flex flex-col gap-4 text-center">
+                <Image
+                  alt="yoda gif"
+                  width="350"
+                  height="350"
+                  src="/images/no-results.gif"
+                />
+                <p>No results</p>
+              </div>
+            )}
           </div>
           {planets.length > PLANETS_PER_PAGE ? <Pagination /> : null}
         </div>
