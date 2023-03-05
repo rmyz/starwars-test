@@ -27,7 +27,8 @@ const sortNumeric = ({
   sorter: Lowercase<TSort>;
 }) => {
   return planets.sort((a, b) => {
-    const numberFormatted = (value: string) => Number(value.replace(",", ""));
+    const numberFormatted = (value: string) =>
+      Number(value.replaceAll(",", ""));
 
     if (numberFormatted(a[sorter]) < numberFormatted(b[sorter])) {
       return -1;
