@@ -25,10 +25,16 @@ Or, alternatively, if you want it on Docker/Prod mode:
   sh start.sh
 ```
 
-For testing, you can run:
+For unit testing, you can run:
 
 ```sh
   pnpm run test
+```
+
+For e2e testing, you can run:
+
+```sh
+  pnpm exec playwright test
 ```
 
 To build the app:
