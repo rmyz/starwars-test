@@ -28,6 +28,7 @@ const sortNumeric = ({
 }) => {
   return planets.sort((a, b) => {
     const numberFormatted = (value: string) => Number(value.replace(",", ""));
+
     if (numberFormatted(a[sorter]) < numberFormatted(b[sorter])) {
       return -1;
     }
@@ -54,6 +55,7 @@ export const sort = ({
 
   const sortFunc = sortFuncByCriteria[sorterCriteria];
   const sorterFormatted = sorter.toLowerCase() as Lowercase<TSort>;
+  const copyPlanets = structuredClone(planets);
 
-  return [...sortFunc({ planets, sorter: sorterFormatted })];
+  return sortFunc({ planets: copyPlanets, sorter: sorterFormatted });
 };

@@ -63,7 +63,6 @@ const PlanetModal = ({
               climates,
               population,
               terrains,
-              img,
             },
             planets,
           });
