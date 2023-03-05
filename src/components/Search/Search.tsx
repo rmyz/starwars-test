@@ -48,7 +48,6 @@ const Search = () => {
         <label htmlFor="searchBySelect">Search by</label>
         <Select
           id="searchBySelect"
-          bg="#985EFF"
           variant="filled"
           onChange={handleOnChangeCriteria}
         >
@@ -67,7 +66,6 @@ const Search = () => {
           </InputLeftElement>
           <Input
             id="searchInput"
-            bg="#6200EE"
             variant="filled"
             onChange={handleOnChangeSearch}
           />

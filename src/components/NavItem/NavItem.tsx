@@ -12,9 +12,7 @@ const NavItem = ({
 }) => {
   return (
     <Link href={route}>
-      <p className={`${isActive ? `text-[#985EFF] font-bold` : ``}`}>
-        {children}
-      </p>
+      <p className={`${isActive && `text-primary font-bold`}`}>{children}</p>
     </Link>
   );
 };

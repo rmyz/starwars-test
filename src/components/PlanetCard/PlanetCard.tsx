@@ -34,16 +34,16 @@ const PlanetCard = ({
   return (
     <div
       onClick={() => onClick(id)}
-      className="flex flex-col max-w-[250px] bg-[#23036A] bg-opacity-30 p-4 rounded-lg outline outline-8 outline-[#23036A] hover:bg-opacity-100 transition-all cursor-pointer"
+      className="flex flex-col max-w-[250px] bg-opacity-30 p-6 rounded-lg outline outline-2 outline-primary hover:bg-opacity-100 transition-all cursor-pointer"
     >
-      <div className="absolute flex flex-col gap-6 ml-[12.5rem]">
+      <div className="absolute flex flex-col gap-6 ml-[190px]">
         <button
           onClick={(event) => {
             event.stopPropagation();
             handleOnEdit();
           }}
         >
-          <FiEdit className="text-2xl" />
+          <FiEdit className="text-2xl transition-all hover:text-primary" />
         </button>
         <button
           onClick={(event) => {
@@ -51,7 +51,7 @@ const PlanetCard = ({
             handleOnDelete();
           }}
         >
-          <FiTrash className="text-2xl" />
+          <FiTrash className="text-2xl transition-all hover:text-primary" />
         </button>
       </div>
       <Image

@@ -53,9 +53,10 @@ const AlertDialogPrimitive = () => {
       // @ts-expect-error
       leastDestructiveRef={cancelRef}
       onClose={() => setIsOpenDeleteAlert(false)}
+      isCentered
     >
       <AlertDialogOverlay>
-        <AlertDialogContent>
+        <AlertDialogContent bg="bg">
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
             Delete Planet
           </AlertDialogHeader>
@@ -70,7 +71,7 @@ const AlertDialogPrimitive = () => {
             <Button ref={cancelRef} onClick={() => setIsOpenDeleteAlert(false)}>
               Cancel
             </Button>
-            <Button colorScheme="red" onClick={handleDelete} ml={3}>
+            <Button bg="danger" onClick={handleDelete} ml={3}>
               Delete
             </Button>
           </AlertDialogFooter>

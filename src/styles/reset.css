@@ -196,13 +196,13 @@ body {
   line-height: 1.5;
   
   /* !important required to overwrite ChakraUI css */
-  background-color: #000004;
+  background-color: var(--chakra-colors-bg) !important;
   background-position: center !important;
   background-size: contain !important;
   color: white !important;
 }
 
 .font-starjedi {
-  -webkit-text-stroke: #FCDB22;
+  -webkit-text-stroke: var(--chakra-colors-primary);
   -webkit-text-stroke-width: 4px;
 }

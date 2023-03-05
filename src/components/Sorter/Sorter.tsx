@@ -19,12 +19,7 @@ const Sorter = () => {
   return (
     <div className="flex flex-col gap-2">
       <label htmlFor="sorter">Sort by</label>
-      <Select
-        id="sorter"
-        variant="filled"
-        bg="#985EFF"
-        onChange={handleOnChange}
-      >
+      <Select id="sorter" variant="filled" onChange={handleOnChange}>
         {SORTER_CONFIG.map((value) => (
           <option key={value} value={value}>
             {value}

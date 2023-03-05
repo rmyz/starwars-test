@@ -87,9 +87,14 @@ const PlanetModal = ({
   };
 
   return (
-    <Modal isOpen={isOpenPlanetModal} onClose={handleClose} size="xl">
+    <Modal
+      isOpen={isOpenPlanetModal}
+      onClose={handleClose}
+      size="xl"
+      isCentered
+    >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent bg="bg">
         <ModalHeader>
           {status !== STATUS.isCreating ? name : "Create a new Planet"}
         </ModalHeader>
@@ -146,14 +151,14 @@ const PlanetModal = ({
             <Button
               onClick={() => handleClickDeleteButton(id)}
               mr={3}
-              colorScheme="red"
+              bg="danger"
             >
               Delete
             </Button>
             <Button
               mr={3}
               onClick={() => setStatus(STATUS.isEditing)}
-              colorScheme="blue"
+              bg="blue"
             >
               Edit
             </Button>

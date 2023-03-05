@@ -17,7 +17,7 @@ const MainLayout = ({
       <Head>
         <title>Star Wars Planets</title>
       </Head>
-      <nav className="flex items-center justify-between px-4 py-2 bg-[#384093]">
+      <nav className="flex items-center justify-between px-4 py-2">
         <Link href="/">
           <Image
             src="/images/logo.png"
@@ -34,7 +34,7 @@ const MainLayout = ({
           <NavItem>About</NavItem>
         </div>
       </nav>
-      <div className="mt-12 lg:p-16 lg:px-32">
+      <div className="mt-12 lg:py-4 lg:px-32">
         <Title>{title}</Title>
         {children}
       </div>

@@ -102,7 +102,7 @@ const CreateForm = ({ onCancel }: { onCancel: () => void }) => {
         {...register("residents", { required: true })}
       />
       <div className="flex justify-between gap-3 mt-6 mb-2">
-        <Button type="submit" colorScheme="green" flexGrow={1}>
+        <Button type="submit" bg="green" flexGrow={1}>
           Save
         </Button>
         <Button role="button" onClick={onCancel}>

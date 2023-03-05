@@ -23,9 +23,9 @@ const Pagination = () => {
     <div className="flex justify-center gap-1 mt-10 lg:gap-4">
       <Button
         isDisabled={!canGoPreviousPage}
-        bg="#985EFF"
+        bg="darkYellow"
         onClick={goPreviousPage}
-        colorScheme="purple"
+        colorScheme="yellow"
       >
         {"<"}
       </Button>
@@ -35,8 +35,9 @@ const Pagination = () => {
 
         return (
           <Button
-            bg={isActive ? "#F2E7FE" : "#985EFF"}
-            colorScheme="purple"
+            bg={isActive ? "primary" : "lowBlack"}
+            colorScheme="yellow"
+            color={isActive ? "black" : "white"}
             key={pageNum}
             onClick={() => gotoPage(idx)}
           >
@@ -46,8 +47,8 @@ const Pagination = () => {
       })}
       <Button
         isDisabled={!canGoNextPage}
-        bg="#985EFF"
-        colorScheme="purple"
+        bg="darkYellow"
+        colorScheme="yellow"
         onClick={goNextPage}
       >
         {">"}

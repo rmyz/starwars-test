@@ -86,7 +86,7 @@ export default function Home() {
       <div className="flex flex-col-reverse justify-end gap-4 px-4 lg:items-end lg:flex-row">
         <Search />
         <Sorter />
-        <Button onClick={handleClickCreate} bg="#985EFF" colorScheme="purple">
+        <Button onClick={handleClickCreate} bg="primary" colorScheme="yellow">
           Add new planet
         </Button>
       </div>
@@ -103,14 +103,19 @@ export default function Home() {
               />
             ))
           ) : (
-            <div className="flex flex-col gap-4 text-center">
+            <div className="flex flex-col items-center gap-4 mt-16 text-lg italic text-center">
               <Image
-                alt="yoda gif"
-                width="350"
-                height="350"
-                src="/images/no-results.gif"
+                alt="yoda"
+                width="450"
+                height="450"
+                src="/images/noresults.jpeg"
+                className="mb-8"
               />
-              <p>No results</p>
+              <p>
+                Looks like we&apos;ve searched the galaxy far and wide, but no
+                results we have found.
+              </p>
+              <p>Perhaps the Force isn&apos;t strong with this search, hmmm?</p>
             </div>
           )}
         </div>
