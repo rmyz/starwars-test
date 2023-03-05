@@ -196,7 +196,7 @@ body {
   line-height: 1.5;
   
   /* !important required to overwrite ChakraUI css */
-  background-image: url("/images/bg.jpg") !important;
+  background-color: #000004;
   background-position: center !important;
   background-size: contain !important;
   color: white !important;

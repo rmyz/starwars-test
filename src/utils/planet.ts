@@ -1,16 +1,23 @@
 import type { TEditFormValues } from "../components/EditForm/EditForm";
+import type { TSearch } from "../components/Search/config";
 import type { TProps } from "../pages";
 import type { TPlanet, TPlanetRaw } from "../types";
 import { formatNumber } from "./numberFormatter";
 
 export const planetFinder = ({
-  id,
+  value,
+  criteria,
   planets,
 }: {
-  id: TPlanet["id"];
+  value: string;
+  criteria: TSearch;
   planets: TProps["planets"];
 }) => {
-  return planets.find((planet) => planet.id === id);
+  const key = criteria.toLowerCase();
+
+  return planets.filter((planet) =>
+    planet[key as keyof TPlanet].toLowerCase().includes(value.toLowerCase())
+  );
 };
 
 export const planetFilter = ({

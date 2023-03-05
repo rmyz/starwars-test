@@ -21,10 +21,8 @@ const Sorter = () => {
       <label htmlFor="sorter">Sort by</label>
       <Select
         id="sorter"
-        colorScheme="purple"
         variant="filled"
-        bg="purple"
-        width="auto"
+        bg="#6200EE"
         onChange={handleOnChange}
       >
         {SORTER_CONFIG.map((value) => (

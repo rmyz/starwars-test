@@ -14,6 +14,8 @@ import { search } from "../useCases/planet/search";
 import { useMemo } from "react";
 import Pagination from "../components/Pagination/Pagination";
 import Sorter from "../components/Sorter/Sorter";
+import Search from "../components/Search/Search";
+import { SEARCH_TYPES } from "../components/Search/config";
 
 export type TProps = Awaited<ReturnType<typeof getServerSideProps>>["props"];
 
@@ -49,7 +51,11 @@ export default function Home() {
   );
 
   const handleOpen = (id: TPlanet["id"], callback?: () => void) => {
-    const planetToOpen = search({ id, planets });
+    const [planetToOpen] = search({
+      value: id,
+      criteria: SEARCH_TYPES.Id,
+      planets,
+    });
 
     if (planetToOpen) {
       setPlanetSelected(planetToOpen);
@@ -68,7 +74,11 @@ export default function Home() {
   };
 
   const handleClickDeleteButton = (id: TPlanet["id"]) => {
-    const planetToOpen = search({ id, planets });
+    const [planetToOpen] = search({
+      value: id,
+      criteria: SEARCH_TYPES.Id,
+      planets,
+    });
 
     if (planetToOpen) {
       setPlanetSelected(planetToOpen);
@@ -107,10 +117,11 @@ export default function Home() {
   return (
     <>
       <MainLayout title="Planets">
-        <div className="flex items-end justify-end gap-4">
+        <div className="flex flex-col-reverse justify-end gap-4 px-4 lg:items-end lg:flex-row">
+          <Search />
           <Sorter />
-          <Button onClick={handleClickCreate} colorScheme="purple">
-            Add new Planet
+          <Button onClick={handleClickCreate} bg="#985EFF">
+            Add new planet
           </Button>
         </div>
         <div className="flex flex-col">
@@ -125,7 +136,7 @@ export default function Home() {
               />
             ))}
           </div>
-          <Pagination />
+          {planets.length > PLANETS_PER_PAGE ? <Pagination /> : null}
         </div>
       </MainLayout>
       <PlanetModal

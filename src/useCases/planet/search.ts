@@ -1,12 +1,15 @@
+import type { TSearch } from "../../components/Search/config";
 import type { TPlanet } from "../../types";
 import { planetFinder } from "../../utils/planet";
 
 export const search = ({
-  id,
+  value,
+  criteria,
   planets,
 }: {
-  id: TPlanet["id"];
+  value: string;
+  criteria: TSearch;
   planets: Array<TPlanet>;
 }) => {
-  return planetFinder({ id, planets });
+  return planetFinder({ value, criteria, planets });
 };

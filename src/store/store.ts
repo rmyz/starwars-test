@@ -1,8 +1,8 @@
 import { createStore } from "zustand";
+import { SEARCH_TYPES, TSearch } from "../components/Search/config";
 import { SORT_TYPES, TSort } from "../components/Sorter/config";
 import type { TStatus } from "../pages";
 import type { TPlanet } from "../types";
-import { sort } from "../useCases/planet/sort";
 
 export type TStoreProps = {
   planets: Array<TPlanet>;
@@ -12,6 +12,9 @@ export type TStoreProps = {
   isOpenDeleteAlert: boolean;
   currentPage: number;
   sorter: TSort;
+  search: string | null;
+  searchCriteria: TSearch;
+  backupPlanets: Array<TPlanet>;
 };
 
 export type TStore = TStoreProps & {
@@ -22,6 +25,9 @@ export type TStore = TStoreProps & {
   setIsOpenDeleteAlert: (value: boolean) => void;
   setCurrentPage: (value: number) => void;
   setSorter: (sort: TSort) => void;
+  setSearch: (search: string) => void;
+  setSearchCriteria: (value: TSearch) => void;
+  setBackupPlanets: (planets: Array<TPlanet>) => void;
 };
 
 export type TAppStore = ReturnType<typeof createAppStore>;
@@ -43,6 +49,9 @@ export const createAppStore = (initProps?: Partial<TStoreProps>) => {
     isOpenDeleteAlert: false,
     currentPage: 0,
     sorter: SORT_TYPES.Name,
+    search: null,
+    searchCriteria: SEARCH_TYPES.Name,
+    backupPlanets: [],
   };
 
   return createStore<TStore>((set, get) => ({
@@ -55,5 +64,8 @@ export const createAppStore = (initProps?: Partial<TStoreProps>) => {
     setIsOpenDeleteAlert: (isOpenDeleteAlert) => set({ isOpenDeleteAlert }),
     setCurrentPage: (currentPage) => set({ currentPage }),
     setSorter: (sorter) => set({ sorter }),
+    setSearch: (search) => set({ search }),
+    setSearchCriteria: (searchCriteria) => set({ searchCriteria }),
+    setBackupPlanets: (backupPlanets) => set({ backupPlanets }),
   }));
 };
