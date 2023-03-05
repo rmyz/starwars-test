@@ -8,7 +8,7 @@ import { edit } from "../../useCases/planet/edit";
 import { STATUS } from "../../pages";
 import { modifyPlanets } from "../../utils/modifyPlanets";
 
-export type TEditFormValues = Omit<TPlanet, "id" | "name">;
+export type TEditFormValues = Omit<TPlanet, "id" | "name" | "img">;
 
 const EditForm = () => {
   const {

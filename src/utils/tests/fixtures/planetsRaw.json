@@ -1,0 +1,41 @@
+[
+  {
+    "id": "123",
+    "name": "Lotr",
+    "residentConnection": {
+      "residents": [
+        { "name": "peter" },
+        { "name": "james" },
+        { "name": "claudia" }
+      ]
+    },
+    "climates": ["hot"],
+    "terrains": ["mountain"],
+    "population": "2000",
+    "diameter": "500"
+  },
+  {
+    "id": "345",
+    "name": "Allan",
+    "residentConnection": {
+      "residents": [
+        { "name": "james" },
+        { "name": "peter" },
+        { "name": "estephan" }
+      ]
+    },
+    "climates": ["cold"],
+    "terrains": ["city"],
+    "population": "4000",
+    "diameter": "300"
+  },
+  {
+    "id": "567",
+    "name": "Martha",
+    "residentConnection": { "residents": [{ "name": "sophie" }] },
+    "climates": ["hot, cold"],
+    "terrains": ["city, mountain"],
+    "population": "7800",
+    "diameter": "300"
+  }
+]

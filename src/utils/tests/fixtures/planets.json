@@ -1,0 +1,32 @@
+[
+  {
+    "id": "123",
+    "img": "/images/planet-5.png",
+    "name": "Lotr",
+    "residents": "peter, james, claudia",
+    "climates": "hot",
+    "terrains": "mountain",
+    "population": "2,000",
+    "diameter": "500"
+  },
+  {
+    "id": "345",
+    "img": "/images/planet-5.png",
+    "name": "Allan",
+    "residents": "james, peter, estephan",
+    "climates": "cold",
+    "terrains": "city",
+    "population": "4,000",
+    "diameter": "300"
+  },
+  {
+    "id": "567",
+    "img": "/images/planet-5.png",
+    "name": "Martha",
+    "residents": "sophie",
+    "climates": "hot, cold",
+    "terrains": "city, mountain",
+    "population": "7,800",
+    "diameter": "300"
+  }
+]

@@ -3,7 +3,7 @@ import type { TSearch } from "../components/Search/config";
 import type { TProps } from "../pages";
 import type { TPlanet, TPlanetRaw } from "../types";
 import { getPlanetImg } from "./getPlanetImg";
-import { formatNumber } from "./numberFormatter";
+import { formatNumber } from "./formatNumber";
 
 export const planetFinder = ({
   value,
