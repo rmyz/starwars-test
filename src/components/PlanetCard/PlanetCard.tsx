@@ -32,12 +32,25 @@ const PlanetCard = ({
   };
 
   return (
-    <article className="flex flex-col max-w-[250px]">
-      <div className="absolute flex flex-col gap-6 mt-4 ml-52">
-        <button onClick={handleOnEdit}>
+    <button
+      onClick={() => onClick(id)}
+      className="flex flex-col max-w-[250px] bg-[#23036A] bg-opacity-30 p-4 rounded-lg outline outline-8 outline-[#23036A] hover:bg-opacity-100 transition-all"
+    >
+      <div className="absolute flex flex-col gap-6 ml-[12.5rem]">
+        <button
+          onClick={(event) => {
+            event.stopPropagation();
+            handleOnEdit();
+          }}
+        >
           <FiEdit className="text-2xl" />
         </button>
-        <button onClick={handleOnDelete}>
+        <button
+          onClick={(event) => {
+            event.stopPropagation();
+            handleOnDelete();
+          }}
+        >
           <FiTrash className="text-2xl" />
         </button>
       </div>
@@ -48,7 +61,7 @@ const PlanetCard = ({
         width="250"
         className="rounded-xl aspect-square"
       />
-      <div onClick={() => onClick(id)} className="flex flex-col gap-2 mt-4">
+      <div className="flex flex-col gap-2 mt-4">
         <p className="text-xl font-semibold text-center">{name}</p>
         <DescriptionItem
           title="Diameter"
@@ -63,7 +76,7 @@ const PlanetCard = ({
           Icon={FiUsers}
         />
       </div>
-    </article>
+    </button>
   );
 };
 
