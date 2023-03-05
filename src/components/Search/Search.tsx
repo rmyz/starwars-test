@@ -14,6 +14,7 @@ const Search = () => {
     backupPlanets,
     setPlanets,
     setBackupPlanets,
+    setCurrentPage,
   } = useAppStore();
 
   const handleOnChangeCriteria = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -34,6 +35,7 @@ const Search = () => {
       });
 
       setPlanets(searchedPlanets);
+      setCurrentPage(0);
     } else {
       setPlanets(backupPlanets);
       setBackupPlanets([]);
