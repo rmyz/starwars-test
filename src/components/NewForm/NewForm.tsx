@@ -11,26 +11,47 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import type { TPlanet } from "../../types";
 import FormLabel from "../FormLabel/FormLabel";
+import { add } from "../../useCases/planet/add";
+import useAppStore from "../../hooks/useAppStore";
+import { STATUS } from "../../pages";
+import { modifyPlanets } from "../../utils/modifyPlanets";
 
 export type TCreateFormValues = Omit<TPlanet, "id">;
 
-const CreateForm = ({
-  onSubmit,
-  onCancel,
-}: {
-  onSubmit: ({ values }: { values: TPlanet }) => void;
-  onCancel: () => void;
-}) => {
+const CreateForm = ({ onCancel }: { onCancel: () => void }) => {
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm<TCreateFormValues>();
+  const {
+    planets,
+    setPlanets,
+    setBackupPlanets,
+    setIsOpenPlanetModal,
+    setStatus,
+    backupPlanets,
+  } = useAppStore();
 
   const handleOnSubmit: SubmitHandler<TCreateFormValues> = (values) => {
     const valuesWithId = { ...values, id: uuidv4() };
 
-    onSubmit({ values: valuesWithId });
+    modifyPlanets({
+      backupPlanets,
+      planets,
+      setPlanets,
+      setBackupPlanets,
+      callback: (planetsToModify, setter) => {
+        const newPlanets = add({
+          newPlanet: valuesWithId,
+          planets: planetsToModify,
+        });
+        setter(newPlanets);
+      },
+    });
+
+    setIsOpenPlanetModal(false);
+    setStatus(STATUS.idle);
   };
 
   return (

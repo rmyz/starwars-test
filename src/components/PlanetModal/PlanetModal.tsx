@@ -16,25 +16,15 @@ import DescriptionItem from "../DescriptionItem/DescriptionItem";
 import { FiCircle, FiHome, FiMap, FiSun, FiUsers } from "react-icons/fi";
 import type { TPlanet } from "../../types";
 import { STATUS } from "../../pages";
-import EditForm, { TEditFormValues } from "../EditForm/EditForm";
+import EditForm from "../EditForm/EditForm";
 import CreateForm from "../NewForm/NewForm";
 import useAppStore from "../../hooks/useAppStore";
 import { planetReplacer } from "../../utils/planet";
 
 const PlanetModal = ({
   handleClickDeleteButton,
-  handleOnSubmitEditForm,
-  handleOnSubmitCreateForm,
 }: {
   handleClickDeleteButton: (id: TPlanet["id"]) => void;
-  handleOnSubmitEditForm: ({
-    values,
-    id,
-  }: {
-    values: TEditFormValues;
-    id: TPlanet["id"];
-  }) => void;
-  handleOnSubmitCreateForm: ({ values }: { values: TPlanet }) => void;
 }) => {
   const {
     planets,
@@ -133,19 +123,10 @@ const PlanetModal = ({
               </div>
             ) : null}
 
-            {status === STATUS.isEditing ? (
-              <EditForm
-                onSubmit={handleOnSubmitEditForm}
-                onCancel={() => setStatus(STATUS.idle)}
-                planet={planetSelected}
-              />
-            ) : null}
+            {status === STATUS.isEditing ? <EditForm /> : null}
 
             {status === STATUS.isCreating ? (
-              <CreateForm
-                onSubmit={handleOnSubmitCreateForm}
-                onCancel={handleClose}
-              />
+              <CreateForm onCancel={handleClose} />
             ) : null}
           </div>
         </ModalBody>

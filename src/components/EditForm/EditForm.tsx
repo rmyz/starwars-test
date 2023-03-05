@@ -3,24 +3,23 @@ import { Button, Input, Textarea } from "@chakra-ui/react";
 import { FiCircle, FiSun, FiUsers, FiMap, FiHome } from "react-icons/fi";
 import type { TPlanet } from "../../types";
 import FormLabel from "../FormLabel/FormLabel";
+import useAppStore from "../../hooks/useAppStore";
+import { edit } from "../../useCases/planet/edit";
+import { STATUS } from "../../pages";
+import { modifyPlanets } from "../../utils/modifyPlanets";
 
 export type TEditFormValues = Omit<TPlanet, "id" | "name">;
 
-const EditForm = ({
-  onSubmit,
-  onCancel,
-  planet,
-}: {
-  onSubmit: ({
-    values,
-    id,
-  }: {
-    values: TEditFormValues;
-    id: TPlanet["id"];
-  }) => void;
-  onCancel: () => void;
-  planet: TPlanet;
-}) => {
+const EditForm = () => {
+  const {
+    planets,
+    setPlanets,
+    setIsOpenPlanetModal,
+    setStatus,
+    backupPlanets,
+    setBackupPlanets,
+    planetSelected: planet,
+  } = useAppStore();
   const {
     handleSubmit,
     register,
@@ -36,7 +35,28 @@ const EditForm = ({
   });
 
   const handleOnSubmit: SubmitHandler<TEditFormValues> = (values) => {
-    onSubmit({ values, id: planet.id });
+    modifyPlanets({
+      backupPlanets,
+      planets,
+      setPlanets,
+      setBackupPlanets,
+      callback: (planetsToModify, setter) => {
+        const newPlanets = edit({
+          id: planet.id,
+          values,
+          planets: planetsToModify,
+        });
+
+        setter(newPlanets);
+      },
+    });
+
+    setIsOpenPlanetModal(false);
+    setStatus(STATUS.idle);
+  };
+
+  const handleOnCancel = () => {
+    setStatus(STATUS.idle);
   };
 
   return (
@@ -82,7 +102,7 @@ const EditForm = ({
         <Button type="submit" colorScheme="green" flexGrow={1}>
           Save
         </Button>
-        <Button role="button" onClick={onCancel}>
+        <Button role="button" onClick={handleOnCancel}>
           Cancel
         </Button>
       </div>
