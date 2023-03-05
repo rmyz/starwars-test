@@ -81,3 +81,13 @@ In order to implement search and avoid calling `getAll` each time we reset the s
 ### Single page app
 
 I thought of creating a page for each action you could do (list/view planet/edit planet/create planet). But that would've been a lot of clicks in order to navigate and could aggravate the UX, so decided to go with Modals that can show information, as well as let you modify it.
+
+### Testing
+
+I have added unit testing for the common files and shared functions (`useCases` and `utils`).
+
+Also there are E2E tests covering the main flows of the app showing the list of planets, showing the details, editing, adding or removing planets, as well as sorting, searching, and paginating.
+
+I consider that E2E are the most valuable tests for a web app, so that's why I have prioritized them over Unit/Integration for the frontend part.
+
+If this was a production case scenario, I would use `testing-library` to get things done.
