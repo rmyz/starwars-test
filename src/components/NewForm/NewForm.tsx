@@ -15,6 +15,7 @@ import { add } from "../../useCases/planet/add";
 import useAppStore from "../../hooks/useAppStore";
 import { STATUS } from "../../pages";
 import { modifyPlanets } from "../../utils/modifyPlanets";
+import { getPlanetImg } from "../../utils/getPlanetImg";
 
 export type TCreateFormValues = Omit<TPlanet, "id">;
 
@@ -34,7 +35,7 @@ const CreateForm = ({ onCancel }: { onCancel: () => void }) => {
   } = useAppStore();
 
   const handleOnSubmit: SubmitHandler<TCreateFormValues> = (values) => {
-    const valuesWithId = { ...values, id: uuidv4() };
+    const valuesWithId = { ...values, img: getPlanetImg(), id: uuidv4() };
 
     modifyPlanets({
       backupPlanets,

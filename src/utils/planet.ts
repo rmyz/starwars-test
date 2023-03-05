@@ -2,6 +2,7 @@ import type { TEditFormValues } from "../components/EditForm/EditForm";
 import type { TSearch } from "../components/Search/config";
 import type { TProps } from "../pages";
 import type { TPlanet, TPlanetRaw } from "../types";
+import { getPlanetImg } from "./getPlanetImg";
 import { formatNumber } from "./numberFormatter";
 
 export const planetFinder = ({
@@ -84,6 +85,7 @@ export const planetFormatter = ({
         residentConnection?.residents
           .map((resident) => resident.name)
           .join(", ") ?? "";
+      const img = getPlanetImg();
 
       return {
         id,
@@ -93,6 +95,7 @@ export const planetFormatter = ({
         residents,
         diameter: diameterFormatted,
         population: populationFormatted,
+        img,
       };
     }
   );

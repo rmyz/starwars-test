@@ -21,7 +21,7 @@ const PlanetCard = ({
   onDelete: (id: TPlanet["id"]) => void;
   onClick: (id: TPlanet["id"]) => void;
 }) => {
-  const { id, diameter, climates, name, population, terrains } = planet;
+  const { id, img, diameter, climates, name, population, terrains } = planet;
 
   const handleOnEdit = () => {
     onEdit(id);
@@ -42,7 +42,7 @@ const PlanetCard = ({
         </button>
       </div>
       <Image
-        src="/images/planet-1.png"
+        src={img}
         alt={name}
         height="250"
         width="250"

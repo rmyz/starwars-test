@@ -3,6 +3,7 @@ import { SEARCH_TYPES, TSearch } from "../components/Search/config";
 import { SORT_TYPES, TSort } from "../components/Sorter/config";
 import type { TStatus } from "../pages";
 import type { TPlanet } from "../types";
+import { getPlanetImg } from "../utils/getPlanetImg";
 
 export type TStoreProps = {
   planets: Array<TPlanet>;
@@ -37,6 +38,7 @@ export const createAppStore = (initProps?: Partial<TStoreProps>) => {
     planets: [],
     planetSelected: {
       id: "",
+      img: getPlanetImg(),
       name: "",
       residents: "",
       climates: "",

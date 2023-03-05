@@ -20,6 +20,7 @@ import EditForm from "../EditForm/EditForm";
 import CreateForm from "../NewForm/NewForm";
 import useAppStore from "../../hooks/useAppStore";
 import { planetReplacer } from "../../utils/planet";
+import { getPlanetImg } from "../../utils/getPlanetImg";
 
 const PlanetModal = ({
   handleClickDeleteButton,
@@ -37,8 +38,16 @@ const PlanetModal = ({
     setIsOpenPlanetModal,
   } = useAppStore();
 
-  const { id, diameter, climates, name, population, terrains, residents } =
-    planetSelected;
+  const {
+    id,
+    img = getPlanetImg(),
+    diameter,
+    climates,
+    name,
+    population,
+    terrains,
+    residents,
+  } = planetSelected;
 
   useEffect(() => {
     async function getResidents() {
@@ -54,12 +63,13 @@ const PlanetModal = ({
               climates,
               population,
               terrains,
+              img,
             },
             planets,
           });
 
           setPlanets(newPlanets);
-          setPlanetSelected(fullPlanet);
+          setPlanetSelected({ ...fullPlanet, img });
         }
       } catch {
         console.error("There has been an error getting by id");
@@ -87,7 +97,7 @@ const PlanetModal = ({
         <ModalBody>
           <div className="flex flex-col items-center gap-4 lg:flex-row lg:items-start">
             <Image
-              src="/images/planet-1.png"
+              src={img}
               alt={name}
               height="300"
               width="300"

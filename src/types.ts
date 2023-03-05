@@ -16,6 +16,7 @@ export type TPlanet = {
   climates: string;
   terrains: string;
   residents: string;
+  img: string;
 };
 
 export type TResident = {
