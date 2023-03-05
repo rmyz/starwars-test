@@ -46,7 +46,8 @@ const Search = () => {
         <label htmlFor="searchBySelect">Search by</label>
         <Select
           id="searchBySelect"
-          bg="#6200EE"
+          bg="#985EFF"
+          variant="filled"
           onChange={handleOnChangeCriteria}
         >
           {SORTER_CONFIG.map((value) => (
@@ -65,6 +66,7 @@ const Search = () => {
           <Input
             id="searchInput"
             bg="#6200EE"
+            variant="filled"
             onChange={handleOnChangeSearch}
           />
         </InputGroup>

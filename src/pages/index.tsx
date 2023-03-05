@@ -121,7 +121,7 @@ export default function Home() {
         <div className="flex flex-col-reverse justify-end gap-4 px-4 lg:items-end lg:flex-row">
           <Search />
           <Sorter />
-          <Button onClick={handleClickCreate} bg="#985EFF">
+          <Button onClick={handleClickCreate} bg="#985EFF" colorScheme="purple">
             Add new planet
           </Button>
         </div>

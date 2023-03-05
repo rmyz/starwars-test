@@ -23,8 +23,9 @@ const Pagination = () => {
     <div className="flex justify-center gap-1 mt-10 lg:gap-4">
       <Button
         isDisabled={!canGoPreviousPage}
-        colorScheme="facebook"
+        bg="#985EFF"
         onClick={goPreviousPage}
+        colorScheme="purple"
       >
         {"<"}
       </Button>
@@ -34,7 +35,8 @@ const Pagination = () => {
 
         return (
           <Button
-            colorScheme={isActive ? "yellow" : "facebook"}
+            bg={isActive ? "#F2E7FE" : "#985EFF"}
+            colorScheme="purple"
             key={pageNum}
             onClick={() => gotoPage(idx)}
           >
@@ -44,7 +46,8 @@ const Pagination = () => {
       })}
       <Button
         isDisabled={!canGoNextPage}
-        colorScheme="facebook"
+        bg="#985EFF"
+        colorScheme="purple"
         onClick={goNextPage}
       >
         {">"}

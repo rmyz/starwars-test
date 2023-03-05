@@ -22,7 +22,7 @@ const Sorter = () => {
       <Select
         id="sorter"
         variant="filled"
-        bg="#6200EE"
+        bg="#985EFF"
         onChange={handleOnChange}
       >
         {SORTER_CONFIG.map((value) => (
