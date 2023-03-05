@@ -34,7 +34,7 @@ const MainLayout = ({
           <NavItem>About</NavItem>
         </div>
       </nav>
-      <div className="mt-12 lg:py-4 lg:px-32">
+      <div className="pb-4 mt-12 lg:py-4 lg:px-32">
         <Title>{title}</Title>
         {children}
       </div>

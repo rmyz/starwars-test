@@ -87,12 +87,7 @@ const PlanetModal = ({
   };
 
   return (
-    <Modal
-      isOpen={isOpenPlanetModal}
-      onClose={handleClose}
-      size="xl"
-      isCentered
-    >
+    <Modal isOpen={isOpenPlanetModal} onClose={handleClose} size="xl">
       <ModalOverlay />
       <ModalContent bg="bg">
         <ModalHeader>
