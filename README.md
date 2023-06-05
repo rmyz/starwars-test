@@ -34,7 +34,7 @@ For unit testing, you can run:
 For e2e testing, you can run:
 
 ```sh
-  pnpm exec playwright test
+  pnpm run test:e2e
 ```
 
 To build the app:
